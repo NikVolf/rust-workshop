@@ -1,4 +1,4 @@
-# Rust Workshop Boilerplanet
+# Rust Workshop Boilerplate
 
 - Install rustup.
 - Use stable rust (`rustup default stable`)
