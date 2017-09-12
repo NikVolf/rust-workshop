@@ -1,0 +1,24 @@
+{
+  "name": "rust-workshop",
+  "version": "0.1.0",
+  "description": "Rust Workshop App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikVolf/rust-workshop.git"
+  },
+  "author": "Nikolay Volf",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NikVolf/rust-workshop/issues"
+  },
+  "homepage": "https://github.com/NikVolf/rust-workshop#readme",
+  "devDependencies": {
+    "http-server": "^0.10.0",
+    "rust-wasm-loader": "^0.1.2",
+    "webpack": "^3.5.6"
+  }
+}
