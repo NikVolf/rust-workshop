@@ -1,0 +1,6 @@
+[package]
+name = "workshop"
+version = "0.1.0"
+authors = ["NikVolf <nikvolf@gmail.com>"]
+
+[dependencies]
