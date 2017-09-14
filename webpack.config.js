@@ -23,6 +23,6 @@ module.exports = {
     // require statements since we know we won't need them.
     externals: {
       'fs': true,
-      'path': true,
+      'path': true
     }
   }
