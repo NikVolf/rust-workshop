@@ -12,19 +12,20 @@ function produce_derivation(module) {
   const source_ptr = malloc(utf8.length);
   const dest_ptr = malloc(32);
 
-  const buffer = new Uint8Array(module.wasmMemory.buffer);
+  const source_buffer = new Uint8Array(module.wasmMemory.buffer, source_ptr, utf8.length);
   for (var i = 0; i < utf8.length; i++) {
-    buffer[source_ptr + i] = source_ptr[i];
+    source_buffer[i] = utf8[i];
   }
 
   key_derive(source_ptr, utf8.length, dest_ptr);
 
+  const dest_buffer = new Uint8Array(module.wasmMemory.buffer, dest_ptr, 32);
   var result = [];
   for (var i = 0; i < 32; i ++) {
-    result.push(buffer[dest_ptr+i]);
+    result.push(dest_buffer[i]);
   }
 
-  document.getElementById("result").innerText = JSON.stringify(result);
+  document.getElementById("result").innerText = utils.bytesToHex(result);
 
   free(source_ptr);
   free(dest_ptr);
