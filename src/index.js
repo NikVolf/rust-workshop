@@ -43,13 +43,20 @@ wasm.initialize().then(wasm_module => {
   }
 
   window.test = function() {
+    var error = false;
     const example = "deuce clown universe brain thousand unique";
     const result = wasm_derivation(wasm_module, example);
     const expected = "1476782f2d9dd799f0bbdf2ed533fb0179902834d7d01f2c54ff9232d2cfa429";
     if (result !== expected) {
       console.error(`Error checking example string "${example}": expected "${expected}", got "${result}"`);
     } else {
-      console.log("Test ok")
+      console.log("Test ok");
+    }
+
+    if (error) {
+      return "Some test failed, see log above";
+    } else {
+      return "All tests passed, great!";
     }
   }
 })
