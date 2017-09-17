@@ -1,9 +1,15 @@
+body {
+    font-family: Courier New, Courier, monospace
+}
+
 #container {
     text-align: center;
 }
 
 #container input, #container button {
     padding: 5px;
+    font-family: Courier New, Courier, monospace;
+    font-weight: bold;
 }
 
 #container input {
