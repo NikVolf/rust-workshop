@@ -1,3 +1,18 @@
 #container {
-    text-align: center
+    text-align: center;
+}
+
+#container input, #container button {
+    padding: 5px;
+}
+
+#container input {
+    width: 400px;
+}
+
+#result-wrap {
+    margin-top: 10px;
+    border-top: 2px solid green;
+    text-decoration: underline;
+    padding: 15px;
 }
