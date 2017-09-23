@@ -5,6 +5,7 @@ authors = ["NikVolf <nikvolf@gmail.com>"]
 
 [dependencies]
 tiny-keccak = "1.3"
+bigint = "4.2"
 
 [[bin]]
 path = "src/main.rs"

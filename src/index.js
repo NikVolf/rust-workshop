@@ -36,10 +36,20 @@ function produce_derivation(module) {
 }
 
 wasm.initialize().then(wasm_module => {
-  let run_button = document.getElementById("run");
-  run_button.removeAttribute("disabled");
-  document.getElementById("run").onclick = function() {
-    produce_derivation(wasm_module);
+  var run_keccak_button = document.getElementById("run-keccak");
+  if (run_keccak_button) {
+    run_keccak_button.removeAttribute("disabled");
+    run_keccak_button.onclick = function() {
+      produce_derivation(wasm_module);
+    }
+  }
+
+  var run_math_button = document.getElementById("run-math");
+  if (run_math_button) {
+    run_math_button.removeAttribute("disabled");
+    run_math_button.onclick = function() {
+      produce_derivation(wasm_module);
+    }
   }
 
   window.test = function() {
