@@ -19,6 +19,13 @@ body {
 #result-wrap {
     margin-top: 10px;
     border-top: 2px solid green;
-    text-decoration: underline;
     padding: 15px;
+}
+
+#result-wrap #result {
+    text-decoration: underline;
+}
+
+#result-hint {
+    font-size: small;
 }

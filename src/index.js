@@ -1,5 +1,6 @@
 const wasm = require('./main.rs');
 const utils = require('./utils.js');
+const BN = require('bn.js');
 
 function wasm_derivation(module, str) {
   const key_derive = module.cwrap('brain_wallet_derive', 'void', ['number', 'number', 'number']);
@@ -30,9 +31,42 @@ function wasm_derivation(module, str) {
   return utils.bytesToHex(result);
 }
 
+function wasm_modexp(module, str) {
+  const modexp = module.cwrap('modexp', 'void', ['number', 'number', 'number']);
+  const malloc = module.cwrap('malloc', 'number', ['number']);
+  const free = module.cwrap('free', 'void', ['number']);
+
+  const source_ptr = malloc(32);
+  const dest_ptr = malloc(32);
+
+  const source = new BN(str, 10).toArray("le", 32);
+  const source_buffer = new Uint8Array(module.wasmMemory.buffer, source_ptr, 32);
+  for (var i = 0; i < 32; i++) {
+    source_buffer[i] = source[i];
+  }
+
+  modexp(source_ptr, dest_ptr);
+
+  const dest_buffer = new Uint8Array(module.wasmMemory.buffer, dest_ptr, 32);
+  var result = [];
+  for (var i = 0; i < 32; i ++) {
+    result.push(dest_buffer[i]);
+  }
+
+  free(source_ptr);
+  free(dest_ptr);
+
+  return utils.bytesToHex(result);
+}
+
 function produce_derivation(module) {
   const str = document.getElementById("sourceString").value;
   document.getElementById("result").innerText = wasm_derivation(module, str);
+}
+
+function process_modexp(module) {
+  const str = document.getElementById("sourceString").value;
+  document.getElementById("result").innerText = wasm_modexp(module, str);
 }
 
 wasm.initialize().then(wasm_module => {
@@ -48,7 +82,7 @@ wasm.initialize().then(wasm_module => {
   if (run_math_button) {
     run_math_button.removeAttribute("disabled");
     run_math_button.onclick = function() {
-      produce_derivation(wasm_module);
+      process_modexp(wasm_module);
     }
   }
 
