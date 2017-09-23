@@ -56,7 +56,7 @@ function wasm_modexp(module, str) {
   free(source_ptr);
   free(dest_ptr);
 
-  return utils.bytesToHex(result);
+  return (new BN(result, 10, "le")).toString(10);
 }
 
 function produce_derivation(module) {
@@ -91,10 +91,23 @@ wasm.initialize().then(wasm_module => {
     const example = "deuce clown universe brain thousand unique";
     const result = wasm_derivation(wasm_module, example);
     const expected = "1476782f2d9dd799f0bbdf2ed533fb0179902834d7d01f2c54ff9232d2cfa429";
+
     if (result !== expected) {
       console.error(`Error checking example string "${example}": expected "${expected}", got "${result}"`);
+      error = true;
     } else {
-      console.log("Test ok");
+      console.log("Test 1 ok");
+    }
+
+    const example2 = "1000000000";
+    const result2 = wasm_modexp(wasm_module, example2);
+    const expected2 = "129511937775246815794430130115251170553";
+
+    if (result2 !== expected2) {
+      console.error(`Error checking example number "${example2}": expected "${expected2}", got "${result2}"`);
+      error = true;
+    } else {
+      console.log("Test 2 ok");
     }
 
     if (error) {

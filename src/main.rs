@@ -67,7 +67,7 @@ pub fn modexp(source_ptr: *const u8, dest_ptr: *mut u8) {
         Vec::from_raw_parts(dest_ptr as *mut u8, 32, 32)
     };
 
-    let p = U256::from_dec_str("190336703473395182854426616575356495301")
+    let p = U256::from_dec_str("1000000000")
         .expect("190336703473395182854426616575356495301 to be a valid U256");
     let mut result = U256::from_little_endian(&source);
 
