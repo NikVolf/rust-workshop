@@ -41,3 +41,21 @@ pub fn brain_wallet_derive(source_ptr: *const u8, source_len: u32, dest_ptr: *mu
     std::mem::forget(source);
     std::mem::forget(dest);
 }
+
+#[test]
+fn derive_test() {
+    let source = "deuce clown universe brain thousand unique";
+    let mut result = [0u8; 32];
+
+    brain_wallet_derive(source.as_ptr(), source.len() as u32, result.as_mut_ptr());
+
+    assert_eq!(
+        result,
+        [
+            0x14, 0x76, 0x78, 0x2f, 0x2d, 0x9d, 0xd7, 0x99,
+            0xf0, 0xbb, 0xdf, 0x2e, 0xd5, 0x33, 0xfb, 0x01,
+            0x79, 0x90, 0x28, 0x34, 0xd7, 0xd0, 0x1f, 0x2c,
+            0x54, 0xff, 0x92, 0x32, 0xd2, 0xcf, 0xa4, 0x29
+        ]
+    );
+}
