@@ -52,7 +52,7 @@ pub fn brain_wallet_derive(source_ptr: *const u8, source_len: u32, dest_ptr: *mu
 
 /// This function takes the 256-bit (32 bytes) integer from the memory
 /// at the location specified by `source_ptr`, makes modular exponentation
-/// to the power of 10000 mod 10000000000000000000000000331 and writes result
+/// to the power of 1000000 mod 10000000000000000000000000331 and writes result
 /// to memory at `dest_ptr`.
 /// input and result are both in little-endian
 #[no_mangle]
@@ -67,13 +67,16 @@ pub fn modexp(source_ptr: *const u8, dest_ptr: *mut u8) {
         Vec::from_raw_parts(dest_ptr as *mut u8, 32, 32)
     };
 
-    let p = U256::from_dec_str("10000000000000000000000000331")
-        .expect("10000000000000000000000000331 to be a valid U256");
+    let p = U256::from_dec_str("190336703473395182854426616575356495301")
+        .expect("190336703473395182854426616575356495301 to be a valid U256");
     let mut result = U256::from_little_endian(&source);
 
-    for _ in 0..10000 {
+    for _ in 0..1000000 {
         result = (result * result) % p;
     }
 
     result.to_little_endian(&mut dest[..]);
+
+    std::mem::forget(source);
+    std::mem::forget(dest);
 }

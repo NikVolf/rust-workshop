@@ -1,4 +1,4 @@
-use brain_wallet_derive;
+use {brain_wallet_derive, modexp};
 
 #[test]
 fn derive_test() {
@@ -16,4 +16,45 @@ fn derive_test() {
             0x54, 0xff, 0x92, 0x32, 0xd2, 0xcf, 0xa4, 0x29
         ]
     );
+}
+
+#[test]
+fn modexp_1() {
+    use bigint::U256;
+
+    let source = U256::from_dec_str(
+        "190336703473395182854426616575356495301"
+    ).unwrap();
+
+    let mut source_param = [0u8; 32];
+    let mut dest_param = [0u8; 32];
+
+    source.to_little_endian(&mut source_param);
+
+    modexp(source_param.as_ptr(), dest_param.as_mut_ptr());
+
+    let result = U256::from_little_endian(&dest_param);
+
+    assert_eq!(result, U256::zero());
+}
+
+
+#[test]
+fn modexp_2() {
+    use bigint::U256;
+
+    let source = U256::from_dec_str(
+        "1000000000"
+    ).unwrap();
+
+    let mut source_param = [0u8; 32];
+    let mut dest_param = [0u8; 32];
+
+    source.to_little_endian(&mut source_param);
+
+    modexp(source_param.as_ptr(), dest_param.as_mut_ptr());
+
+    let result = U256::from_little_endian(&dest_param);
+
+    assert_eq!(result, U256::from_dec_str("129511937775246815794430130115251170553").unwrap());
 }
