@@ -61,12 +61,16 @@ function wasm_modexp(module, str) {
 
 function produce_derivation(module) {
   const str = document.getElementById("sourceString").value;
-  document.getElementById("result").innerText = wasm_derivation(module, str);
+  let result = document.getElementById("result");
+  result.innerText = "computing...";
+  result.innerText = wasm_derivation(module, str);
 }
 
 function process_modexp(module) {
   const str = document.getElementById("sourceString").value;
-  document.getElementById("result").innerText = wasm_modexp(module, str);
+  let result = document.getElementById("result");
+  result.innerText = "computing...";
+  result.innerText = wasm_modexp(module, str);
 }
 
 wasm.initialize().then(wasm_module => {
